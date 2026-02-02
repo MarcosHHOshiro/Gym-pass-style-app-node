@@ -1,5 +1,4 @@
 import { expect, describe, it, beforeEach } from "vitest";
-import { CheckInUseCase } from "./check-ins";
 import { InMemoryCheckInsRepository } from "@/repositories/in-memory/in-memory-check-ins-repository";
 import { FetchUserCheckInsHistoryUseCase } from "./fetch-user-check-ins-history";
 
