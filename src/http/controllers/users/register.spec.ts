@@ -14,13 +14,11 @@ describe('Register (e2e)', () => {
 
     it('should be able to register', async () => {
 
-        const result = await prisma.$queryRawUnsafe(`select current_schema() as schema`)
-        console.log(result)
         const response = await request(app.server)
             .post('/users')
             .send({
                 name: 'John Doe',
-                email: 'john6.doe@example.com',
+                email: 'john7.doe@example.com',
                 password: '123456'
             });
 

@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma';
 import 'dotenv/config';
 import { execSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
@@ -28,6 +27,8 @@ export default <Environment>{
         process.env.DATABASE_URL = databaseUrl;
 
         execSync(`npx prisma migrate deploy`);
+
+        const { prisma } = await import('@/lib/prisma');
 
         return {
             async teardown() {

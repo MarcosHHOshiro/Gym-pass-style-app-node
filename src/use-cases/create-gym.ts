@@ -4,7 +4,7 @@ import type { GymsRepository } from "@/repositories/gyms-repository";
 interface CreateGymUseCaseRequest {
     title: string;
     description?: string;
-    phone: string;
+    phone?: string;
     latitude: number;
     longitude: number;
 }

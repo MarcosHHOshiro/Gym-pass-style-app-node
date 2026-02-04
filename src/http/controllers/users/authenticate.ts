@@ -23,7 +23,7 @@ export async function authenticate(request: FastifyRequest, reply: FastifyReply)
         })
 
 
-        return reply.status(201).send({
+        return reply.status(200).send({
             token
         });
     } catch (error) {
