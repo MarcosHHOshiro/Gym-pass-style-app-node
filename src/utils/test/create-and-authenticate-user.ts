@@ -1,14 +1,15 @@
 import request from 'supertest';
-import { app } from '@/app';
 import type { FastifyInstance } from 'fastify';
+import { hash } from 'bcryptjs';
 
-export async function createAndAuthenticateUser(app: FastifyInstance) {
+export async function createAndAuthenticateUser(app: FastifyInstance, isAdmin = false) {
     await request(app.server)
         .post('/users')
         .send({
             name: 'John Doe',
             email: 'john6.doe@example.com',
-            password: '123456'
+            password: await hash('123456', 6),
+            role
         });
 
     const authResponse = await request(app.server)
