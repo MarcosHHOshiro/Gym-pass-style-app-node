@@ -4,6 +4,7 @@ import { create } from "./create";
 import { validate } from "./validate";
 import { history } from "./history";
 import { metrics } from "./metrics";
+import { verifyUserRole } from "@/http/middleware/verify-user-role";
 
 export async function checkInsRoutes(app: FastifyInstance) {
     app.addHook('onRequest', verifyJwt);
@@ -12,5 +13,5 @@ export async function checkInsRoutes(app: FastifyInstance) {
     app.get('/check-ins/metrics', metrics);
 
     app.post('/gyms/:gymId/check-ins', create);
-    app.patch('/check-ins/validate/:checkInId/validate', validate);
+    app.patch('/check-ins/validate/:checkInId/validate', { onRequest: verifyUserRole('ADMIN') }, validate);
 }
