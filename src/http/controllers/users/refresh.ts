@@ -1,4 +1,10 @@
 import { type FastifyReply, type FastifyRequest } from "fastify";
+import z from "zod";
+
+// Response schema
+export const refreshResponseSchema = z.object({
+    token: z.string().describe('Novo JWT token de acesso (expira em 10 minutos)')
+});
 
 export async function refresh(request: FastifyRequest, reply: FastifyReply) {
     await request.jwtVerify({ onlyCookie: true })

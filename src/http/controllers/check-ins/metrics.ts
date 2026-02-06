@@ -1,5 +1,11 @@
 import { type FastifyReply, type FastifyRequest } from "fastify";
+import z from "zod";
 import { makeGetUserMetricsUseCase } from "@/use-cases/factories/make-get-user-metrics-use-case";
+
+// Response schema
+export const metricsResponseSchema = z.object({
+    checkInsCount: z.number().describe('Número total de check-ins realizados pelo usuário')
+});
 
 export async function metrics(request: FastifyRequest, reply: FastifyReply) {
     const getUserMetricsUseCase = makeGetUserMetricsUseCase()

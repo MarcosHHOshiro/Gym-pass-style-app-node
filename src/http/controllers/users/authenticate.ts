@@ -3,12 +3,22 @@ import { type FastifyReply, type FastifyRequest } from "fastify";
 import { InvalidCredentialsError } from "@/use-cases/errors/invalid-credentials-erros";
 import { makeAuthenticateUseCase } from "@/use-cases/factories/make-authenticate-use-case";
 
-export async function authenticate(request: FastifyRequest, reply: FastifyReply) {
-    const authenticateBodySchema = z.object({
-        email: z.email(),
-        password: z.string().min(6)
-    })
+// Request schema
+export const authenticateBodySchema = z.object({
+    email: z.string().email().describe('Email do usuário'),
+    password: z.string().min(6).describe('Senha do usuário')
+});
 
+// Response schemas
+export const authenticateResponseSchema = z.object({
+    token: z.string().describe('JWT token de acesso (expira em 10 minutos)')
+});
+
+export const authenticateErrorSchema = z.object({
+    message: z.string()
+});
+
+export async function authenticate(request: FastifyRequest, reply: FastifyReply) {
     const { email, password } = authenticateBodySchema.parse(request.body)
 
     try {

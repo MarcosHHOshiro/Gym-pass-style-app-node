@@ -3,13 +3,19 @@ import { type FastifyReply, type FastifyRequest } from "fastify";
 import { UserAlreadyExistsError } from "@/use-cases/errors/user-already-exists-error";
 import { makeRegisterUseCase } from "@/use-cases/factories/make-register-use-case";
 
-export async function register(request: FastifyRequest, reply: FastifyReply) {
-    const registerBodySchema = z.object({
-        name: z.string(),
-        email: z.email(),
-        password: z.string().min(6)
-    })
+// Request schema
+export const registerBodySchema = z.object({
+    name: z.string().min(1).describe('Nome completo do usuário'),
+    email: z.string().email().describe('Email válido'),
+    password: z.string().min(6).describe('Senha com mínimo de 6 caracteres')
+});
 
+// Response schemas
+export const registerErrorSchema = z.object({
+    message: z.string()
+});
+
+export async function register(request: FastifyRequest, reply: FastifyReply) {
     const { name, email, password } = registerBodySchema.parse(request.body)
 
     try {

@@ -44,6 +44,7 @@ Esta aplicação permite que usuários se cadastrem, busquem academias próximas
 - **JWT** - Autenticação via tokens
 - **Bcrypt.js** - Hash de senhas
 - **Zod** - Validação de schemas
+- **Swagger/OpenAPI** - Documentação interativa da API
 - **Vitest** - Framework de testes unitários e E2E
 - **Docker & Docker Compose** - Containerização da aplicação
 
@@ -222,6 +223,55 @@ O projeto está totalmente containerizado com Docker:
 ### Portas
 - API: `3333`
 - PostgreSQL: `5435` (mapeado para 5432 internamente)
+
+## 📚 Documentação da API (Swagger/OpenAPI)
+
+A API possui documentação completa e interativa gerada automaticamente com Swagger/OpenAPI 3.0.
+
+### Acessar a Documentação
+
+Após iniciar a aplicação, a documentação estará disponível em:
+
+- **Swagger UI (Interface Interativa)**: http://localhost:3333/docs
+- **Especificação OpenAPI (JSON)**: http://localhost:3333/docs/json
+
+### Funcionalidades da Documentação
+
+- ✅ **Interface Interativa**: Teste todos os endpoints diretamente pelo navegador
+- ✅ **Autenticação Integrada**: Botão "Authorize" para configurar o token JWT
+- ✅ **Schemas Completos**: Documentação detalhada de todos os requests e responses
+- ✅ **Validações**: Descrição de todas as validações e regras de negócio
+- ✅ **Exemplos**: Exemplos de uso para cada endpoint
+- ✅ **Status Codes**: Documentação de todos os códigos de retorno possíveis
+
+### Endpoints Documentados
+
+#### 👤 Users (Usuários)
+- `POST /users` - Registrar novo usuário
+- `POST /sessions` - Autenticar usuário (login)
+- `PATCH /token/refresh` - Renovar token JWT
+- `GET /me` - Obter perfil do usuário autenticado
+
+#### 🏋️ Gyms (Academias)
+- `GET /gyms/search` - Pesquisar academias por nome
+- `GET /gyms/nearby` - Buscar academias próximas (até 10km)
+- `POST /gyms` - Criar nova academia (requer ADMIN)
+
+#### ✅ Check-ins
+- `GET /check-ins/history` - Histórico de check-ins do usuário
+- `GET /check-ins/metrics` - Métricas totais de check-ins
+- `POST /gyms/:gymId/check-ins` - Realizar check-in em uma academia
+- `PATCH /check-ins/:checkInId/validate` - Validar check-in (requer ADMIN)
+
+### Como Usar a Documentação Interativa
+
+1. Acesse http://localhost:3333/docs
+2. Para testar endpoints protegidos:
+   - Primeiro, faça uma requisição `POST /sessions` para obter o token
+   - Clique no botão **"Authorize"** no topo da página
+   - Cole o token JWT no campo `bearerAuth`
+   - Clique em "Authorize" e depois "Close"
+3. Agora você pode testar todos os endpoints clicando em "Try it out"
 
 ## 🤝 Contribuindo
 
