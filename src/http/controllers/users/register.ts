@@ -5,9 +5,9 @@ import { makeRegisterUseCase } from "@/use-cases/factories/make-register-use-cas
 
 // Request schema
 export const registerBodySchema = z.object({
-    name: z.string().min(1).describe('Nome completo do usuário'),
-    email: z.string().email().describe('Email válido'),
-    password: z.string().min(6).describe('Senha com mínimo de 6 caracteres')
+    name: z.string().min(1).describe('Full name'),
+    email: z.string().email().describe('Valid email address'),
+    password: z.string().min(6).describe('Password (minimum 6 characters)')
 });
 
 // Response schemas

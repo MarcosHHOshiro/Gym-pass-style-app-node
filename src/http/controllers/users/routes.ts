@@ -11,60 +11,60 @@ import { unauthorizedErrorSchema, validationErrorSchema } from "../schemas/commo
 export async function usersRoutes(app: FastifyInstance) {
     const appWithType = app.withTypeProvider<ZodTypeProvider>();
 
-    // POST /users - Registro de usuário
+    // POST /users - User registration
     appWithType.post('/users', {
         schema: {
-            summary: 'Registrar novo usuário',
-            description: 'Cria um novo usuário no sistema com email único',
+            summary: 'Register new user',
+            description: 'Creates a new user in the system with unique email',
             tags: ['users'],
             body: registerBodySchema,
             response: {
-                201: z.object({}).describe('Usuário registrado com sucesso'),
-                409: registerErrorSchema.describe('Email já cadastrado'),
-                400: validationErrorSchema.describe('Erro de validação dos dados'),
+                201: z.object({}).describe('User registered successfully'),
+                409: registerErrorSchema.describe('Email already registered'),
+                400: validationErrorSchema.describe('Data validation error'),
             },
         }
     }, register);
 
-    // POST /sessions - Autenticação
+    // POST /sessions - Authentication
     appWithType.post('/sessions', {
         schema: {
-            summary: 'Autenticar usuário',
-            description: 'Realiza login e retorna token JWT. Refresh token é enviado em cookie httpOnly',
+            summary: 'Authenticate user',
+            description: 'Performs login and returns JWT token. Refresh token is sent in httpOnly cookie',
             tags: ['users'],
             body: authenticateBodySchema,
             response: {
-                200: authenticateResponseSchema.describe('Autenticação bem-sucedida. Refresh token enviado em cookie'),
-                400: authenticateErrorSchema.describe('Credenciais inválidas'),
+                200: authenticateResponseSchema.describe('Authentication successful. Refresh token sent in cookie'),
+                400: authenticateErrorSchema.describe('Invalid credentials'),
             },
         }
     }, authenticate);
 
-    // PATCH /token/refresh - Renovar token
+    // PATCH /token/refresh - Refresh token
     appWithType.patch('/token/refresh', {
         schema: {
-            summary: 'Renovar token de acesso',
-            description: 'Gera novo token JWT usando refresh token do cookie. Novo refresh token também é enviado',
+            summary: 'Refresh access token',
+            description: 'Generates new JWT token using refresh token from cookie. New refresh token is also sent',
             tags: ['users'],
             security: [{ cookieAuth: [] }],
             response: {
-                200: refreshResponseSchema.describe('Token renovado com sucesso. Novo refresh token enviado em cookie'),
-                401: unauthorizedErrorSchema.describe('Refresh token inválido ou expirado'),
+                200: refreshResponseSchema.describe('Token refreshed successfully. New refresh token sent in cookie'),
+                401: unauthorizedErrorSchema.describe('Invalid or expired refresh token'),
             },
         }
     }, refresh);
 
-    // GET /me - Perfil do usuário
+    // GET /me - User profile
     appWithType.get('/me', {
         onRequest: [verifyJwt],
         schema: {
-            summary: 'Obter perfil do usuário autenticado',
-            description: 'Retorna dados completos do usuário logado (requer autenticação JWT)',
+            summary: 'Get authenticated user profile',
+            description: 'Returns complete data of the logged in user (requires JWT authentication)',
             tags: ['users'],
             security: [{ bearerAuth: [] }],
             response: {
-                200: profileResponseSchema.describe('Perfil do usuário'),
-                401: unauthorizedErrorSchema.describe('Token JWT inválido ou expirado'),
+                200: profileResponseSchema.describe('User profile'),
+                401: unauthorizedErrorSchema.describe('Invalid or expired JWT token'),
             },
         }
     }, profile);

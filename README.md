@@ -1,105 +1,105 @@
 # 🏋️ GymPass Style App
 
-API RESTful para gerenciamento de check-ins em academias, inspirada no modelo de negócio do GymPass. Desenvolvida com Node.js, TypeScript, Fastify e Prisma ORM.
+RESTful API for managing gym check-ins, inspired by the GymPass business model. Built with Node.js, TypeScript, Fastify and Prisma ORM.
 
-## 📋 Sobre o Projeto
+## 📋 About the Project
 
-Esta aplicação permite que usuários se cadastrem, busquem academias próximas e realizem check-ins. Administradores podem cadastrar academias e validar check-ins dos usuários.
+This application allows users to register, search for nearby gyms and check-in. Administrators can register gyms and validate user check-ins.
 
-## ✨ Funcionalidades
+## ✨ Features
 
-### RFs (Requisitos Funcionais)
-- ✅ Deve ser possível se cadastrar
-- ✅ Deve ser possível se autenticar
-- ✅ Deve ser possível obter o perfil de um usuário logado
-- ✅ Deve ser possível obter o número de check-ins realizados pelo usuário logado
-- ✅ Deve ser possível o usuário obter o seu histórico de check-ins
-- ✅ Deve ser possível o usuário buscar academias próximas (até 10km)
-- ✅ Deve ser possível o usuário buscar academias pelo nome
-- ✅ Deve ser possível o usuário realizar check-in em uma academia
-- ✅ Deve ser possível validar o check-in de um usuário
-- ✅ Deve ser possível cadastrar uma academia
+### Functional Requirements (FRs)
+- ✅ Users should be able to register
+- ✅ Users should be able to authenticate
+- ✅ Users should be able to get their profile
+- ✅ Users should be able to get the number of check-ins they have made
+- ✅ Users should be able to get their check-in history
+- ✅ Users should be able to search for nearby gyms (up to 10km)
+- ✅ Users should be able to search for gyms by name
+- ✅ Users should be able to check-in at a gym
+- ✅ User check-ins should be validated
+- ✅ Gyms should be registered
 
-### RNs (Regras de Negócio)
-- ✅ O usuário não deve poder se cadastrar com um e-mail duplicado
-- ✅ O usuário não pode fazer 2 check-ins no mesmo dia
-- ✅ O usuário não pode fazer check-in se não estiver perto (100m) da academia
-- ✅ O check-in só pode ser validado até 20 minutos após ser criado
-- ✅ O check-in só pode ser validado por administradores
-- ✅ A academia só pode ser cadastrada por administradores
+### Business Rules (BRs)
+- ✅ Users cannot register with a duplicate email
+- ✅ Users cannot check-in twice on the same day
+- ✅ Users cannot check-in if they are not near (100m) the gym
+- ✅ Check-ins can only be validated within 20 minutes after creation
+- ✅ Check-ins can only be validated by administrators
+- ✅ Gyms can only be registered by administrators
 
-### RNFs (Requisitos Não-Funcionais)
-- ✅ A senha do usuário precisa estar criptografada
-- ✅ Os dados da aplicação precisam estar persistidos em um banco PostgreSQL
-- ✅ Todas listas de dados precisam estar paginadas com 20 itens por página
-- ✅ O usuário deve ser identificado por um JWT (JSON Web Token)
+### Non-Functional Requirements (NFRs)
+- ✅ User passwords must be encrypted
+- ✅ Application data must be persisted in a PostgreSQL database
+- ✅ All data lists must be paginated with 20 items per page
+- ✅ Users must be identified by a JWT (JSON Web Token)
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Technologies Used
 
-- **Node.js** - Runtime JavaScript
-- **TypeScript** - Superset JavaScript com tipagem estática
-- **Fastify** - Framework web rápido e de baixo overhead
-- **Prisma ORM** - ORM moderno para Node.js e TypeScript
-- **PostgreSQL** - Banco de dados relacional
-- **JWT** - Autenticação via tokens
-- **Bcrypt.js** - Hash de senhas
-- **Zod** - Validação de schemas
-- **Swagger/OpenAPI** - Documentação interativa da API
-- **Vitest** - Framework de testes unitários e E2E
-- **Docker & Docker Compose** - Containerização da aplicação
+- **Node.js** - JavaScript runtime
+- **TypeScript** - JavaScript superset with static typing
+- **Fastify** - Fast and low overhead web framework
+- **Prisma ORM** - Modern ORM for Node.js and TypeScript
+- **PostgreSQL** - Relational database
+- **JWT** - Token-based authentication
+- **Bcrypt.js** - Password hashing
+- **Zod** - Schema validation
+- **Swagger/OpenAPI** - Interactive API documentation
+- **Vitest** - Unit and E2E testing framework
+- **Docker & Docker Compose** - Application containerization
 
-## 📊 Modelo de Dados
+## 📊 Data Model
 
-### User (Usuário)
+### User
 - `id`: UUID
 - `name`: String
-- `email`: String (único)
+- `email`: String (unique)
 - `password_hash`: String
 - `role`: Enum (MEMBER | ADMIN)
 - `created_at`: DateTime
 - `updated_at`: DateTime
 
-### Gym (Academia)
+### Gym
 - `id`: UUID
 - `title`: String
-- `description`: String (opcional)
-- `phone`: String (opcional)
+- `description`: String (optional)
+- `phone`: String (optional)
 - `latitude`: Decimal
 - `longitude`: Decimal
 
 ### CheckIn
 - `id`: UUID
 - `created_at`: DateTime
-- `validated_at`: DateTime (opcional)
+- `validated_at`: DateTime (optional)
 - `user_id`: UUID (FK → User)
 - `gym_id`: UUID (FK → Gym)
 
-## 🚀 Como Executar
+## 🚀 Getting Started
 
-### Pré-requisitos
+### Prerequisites
 - Node.js 20+
-- Docker e Docker Compose
-- npm ou yarn
+- Docker and Docker Compose
+- npm or yarn
 
-### Instalação
+### Installation
 
-1. Clone o repositório:
+1. Clone the repository:
 ```bash
 git clone https://github.com/MarcosHHOshiro/Gym-pass-style-app-node.git
 cd Gym-pass-style-app-node
 ```
 
-2. Instale as dependências:
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Configure as variáveis de ambiente:
+3. Configure environment variables:
 ```bash
 cp .env.example .env
 ```
 
-Edite o arquivo `.env` com suas configurações:
+Edit the `.env` file with your settings:
 ```env
 NODE_ENV=dev
 PORT=3333
@@ -107,185 +107,185 @@ JWT_SECRET=your-secret-key
 DATABASE_URL=postgresql://docker:docker@localhost:5435/apisolid?schema=public
 ```
 
-### Executando com Docker
+### Running with Docker
 
-1. Inicie os containers:
+1. Start the containers:
 ```bash
 docker compose up -d --build
 ```
 
-2. A API estará disponível em `http://localhost:3333`
+2. The API will be available at `http://localhost:3333`
 
-3. Para visualizar os logs:
+3. To view logs:
 ```bash
 docker compose logs -f api
 ```
 
-4. Para acessar o container da API:
+4. To access the API container:
 ```bash
 docker compose exec api sh
 ```
 
-5. Para parar os containers:
+5. To stop the containers:
 ```bash
 docker compose down
 ```
 
-### Executando Localmente (sem Docker)
+### Running Locally (without Docker)
 
-1. Inicie o banco de dados PostgreSQL (via Docker):
+1. Start the PostgreSQL database (via Docker):
 ```bash
 docker compose up db -d
 ```
 
-2. Execute as migrations do Prisma:
+2. Run Prisma migrations:
 ```bash
 npx prisma generate
 npx prisma migrate deploy
 ```
 
-3. Inicie o servidor em modo de desenvolvimento:
+3. Start the server in development mode:
 ```bash
 npm run dev
 ```
 
-## 📝 Scripts Disponíveis
+## 📝 Available Scripts
 
-- `npm run dev` - Inicia o servidor em modo de desenvolvimento com hot reload
-- `npm run build` - Gera o build de produção
-- `npm start` - Inicia o servidor de produção
-- `npm test` - Executa os testes unitários
-- `npm run test:watch` - Executa os testes em modo watch
-- `npm run test:e2e` - Executa os testes end-to-end
-- `npm run test:e2e:watch` - Executa os testes E2E em modo watch
-- `npm run test:coverage` - Gera relatório de cobertura de testes
-- `npm run test:ui` - Abre interface visual do Vitest
+- `npm run dev` - Start server in development mode with hot reload
+- `npm run build` - Generate production build
+- `npm start` - Start production server
+- `npm test` - Run unit tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:e2e` - Run end-to-end tests
+- `npm run test:e2e:watch` - Run E2E tests in watch mode
+- `npm run test:coverage` - Generate test coverage report
+- `npm run test:ui` - Open Vitest visual interface
 
-## 🧪 Testes
+## 🧪 Testing
 
-O projeto possui cobertura de testes unitários e end-to-end utilizando Vitest.
+The project has unit and end-to-end test coverage using Vitest.
 
-### Executar testes unitários:
+### Run unit tests:
 ```bash
 npm test
 ```
 
-### Executar testes E2E:
+### Run E2E tests:
 ```bash
 npm run test:e2e
 ```
 
-### Gerar relatório de cobertura:
+### Generate coverage report:
 ```bash
 npm run test:coverage
 ```
 
-## 🗂️ Estrutura do Projeto
+## 🗂️ Project Structure
 
 ```
 src/
-├── @types/          # Definições de tipos TypeScript
-├── env/             # Configuração e validação de variáveis de ambiente
-├── http/            # Camada HTTP
-│   ├── controllers/ # Controllers das rotas
-│   └── middleware/  # Middlewares (autenticação, RBAC, etc.)
-├── lib/             # Bibliotecas e configurações (Prisma, etc.)
-├── repositories/    # Camada de acesso aos dados
-├── use-cases/       # Regras de negócio da aplicação
-├── utils/           # Funções utilitárias
-├── app.ts           # Configuração do Fastify
-└── server.ts        # Inicialização do servidor
+├── @types/          # TypeScript type definitions
+├── env/             # Environment variable configuration and validation
+├── http/            # HTTP layer
+│   ├── controllers/ # Route controllers
+│   └── middleware/  # Middlewares (authentication, RBAC, etc.)
+├── lib/             # Libraries and configurations (Prisma, etc.)
+├── repositories/    # Data access layer
+├── use-cases/       # Application business rules
+├── utils/           # Utility functions
+├── app.ts           # Fastify configuration
+└── server.ts        # Server initialization
 ```
 
-## 🔐 Autenticação
+## 🔐 Authentication
 
-A API utiliza JWT (JSON Web Tokens) para autenticação. Para acessar rotas protegidas:
+The API uses JWT (JSON Web Tokens) for authentication. To access protected routes:
 
-1. Faça login através do endpoint de autenticação
-2. Inclua o token retornado no header das requisições:
+1. Login through the authentication endpoint
+2. Include the returned token in the request header:
 ```
-Authorization: Bearer {seu-token}
+Authorization: Bearer {your-token}
 ```
 
 ## 🔑 RBAC (Role-Based Access Control)
 
-O sistema possui dois níveis de acesso:
-- **MEMBER**: Usuário padrão (pode fazer check-ins, buscar academias)
-- **ADMIN**: Administrador (pode cadastrar academias, validar check-ins)
+The system has two access levels:
+- **MEMBER**: Standard user (can check-in, search gyms)
+- **ADMIN**: Administrator (can register gyms, validate check-ins)
 
 ## 📦 Docker
 
-O projeto está totalmente containerizado com Docker:
+The project is fully containerized with Docker:
 
-- **db**: Container PostgreSQL 16
-- **api**: Container da aplicação Node.js
+- **db**: PostgreSQL 16 container
+- **api**: Node.js application container
 
-### Portas
+### Ports
 - API: `3333`
-- PostgreSQL: `5435` (mapeado para 5432 internamente)
+- PostgreSQL: `5435` (mapped to 5432 internally)
 
-## 📚 Documentação da API (Swagger/OpenAPI)
+## 📚 API Documentation (Swagger/OpenAPI)
 
-A API possui documentação completa e interativa gerada automaticamente com Swagger/OpenAPI 3.0.
+The API has complete and interactive documentation automatically generated with Swagger/OpenAPI 3.0.
 
-### Acessar a Documentação
+### Access Documentation
 
-Após iniciar a aplicação, a documentação estará disponível em:
+After starting the application, the documentation will be available at:
 
-- **Swagger UI (Interface Interativa)**: http://localhost:3333/docs
-- **Especificação OpenAPI (JSON)**: http://localhost:3333/docs/json
+- **Swagger UI (Interactive Interface)**: http://localhost:3333/docs
+- **OpenAPI Specification (JSON)**: http://localhost:3333/docs/json
 
-### Funcionalidades da Documentação
+### Documentation Features
 
-- ✅ **Interface Interativa**: Teste todos os endpoints diretamente pelo navegador
-- ✅ **Autenticação Integrada**: Botão "Authorize" para configurar o token JWT
-- ✅ **Schemas Completos**: Documentação detalhada de todos os requests e responses
-- ✅ **Validações**: Descrição de todas as validações e regras de negócio
-- ✅ **Exemplos**: Exemplos de uso para cada endpoint
-- ✅ **Status Codes**: Documentação de todos os códigos de retorno possíveis
+- ✅ **Interactive Interface**: Test all endpoints directly from your browser
+- ✅ **Integrated Authentication**: "Authorize" button to configure JWT token
+- ✅ **Complete Schemas**: Detailed documentation of all requests and responses
+- ✅ **Validations**: Description of all validations and business rules
+- ✅ **Examples**: Usage examples for each endpoint
+- ✅ **Status Codes**: Documentation of all possible return codes
 
-### Endpoints Documentados
+### Documented Endpoints
 
-#### 👤 Users (Usuários)
-- `POST /users` - Registrar novo usuário
-- `POST /sessions` - Autenticar usuário (login)
-- `PATCH /token/refresh` - Renovar token JWT
-- `GET /me` - Obter perfil do usuário autenticado
+#### 👤 Users
+- `POST /users` - Register new user
+- `POST /sessions` - Authenticate user (login)
+- `PATCH /token/refresh` - Refresh JWT token
+- `GET /me` - Get authenticated user profile
 
-#### 🏋️ Gyms (Academias)
-- `GET /gyms/search` - Pesquisar academias por nome
-- `GET /gyms/nearby` - Buscar academias próximas (até 10km)
-- `POST /gyms` - Criar nova academia (requer ADMIN)
+#### 🏋️ Gyms
+- `GET /gyms/search` - Search gyms by name
+- `GET /gyms/nearby` - Find nearby gyms (up to 10km)
+- `POST /gyms` - Create new gym (requires ADMIN)
 
 #### ✅ Check-ins
-- `GET /check-ins/history` - Histórico de check-ins do usuário
-- `GET /check-ins/metrics` - Métricas totais de check-ins
-- `POST /gyms/:gymId/check-ins` - Realizar check-in em uma academia
-- `PATCH /check-ins/:checkInId/validate` - Validar check-in (requer ADMIN)
+- `GET /check-ins/history` - User check-in history
+- `GET /check-ins/metrics` - Total check-in metrics
+- `POST /gyms/:gymId/check-ins` - Check-in at a gym
+- `PATCH /check-ins/:checkInId/validate` - Validate check-in (requires ADMIN)
 
-### Como Usar a Documentação Interativa
+### How to Use Interactive Documentation
 
-1. Acesse http://localhost:3333/docs
-2. Para testar endpoints protegidos:
-   - Primeiro, faça uma requisição `POST /sessions` para obter o token
-   - Clique no botão **"Authorize"** no topo da página
-   - Cole o token JWT no campo `bearerAuth`
-   - Clique em "Authorize" e depois "Close"
-3. Agora você pode testar todos os endpoints clicando em "Try it out"
+1. Access http://localhost:3333/docs
+2. To test protected endpoints:
+   - First, make a `POST /sessions` request to get the token
+   - Click the **"Authorize"** button at the top of the page
+   - Paste the JWT token in the `bearerAuth` field
+   - Click "Authorize" and then "Close"
+3. Now you can test all endpoints by clicking "Try it out"
 
-## 🤝 Contribuindo
+## 🤝 Contributing
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
+Contributions are welcome! Feel free to open issues or submit pull requests.
 
-## 📄 Licença
+## 📄 License
 
-Este projeto está sob a licença ISC.
+This project is under the ISC license.
 
-## 👤 Autor
+## 👤 Author
 
-Desenvolvido por [MarcosHHOshiro](https://github.com/MarcosHHOshiro)
+Developed by [MarcosHHOshiro](https://github.com/MarcosHHOshiro)
 
 ## 🔗 Links
 
-- [Repositório](https://github.com/MarcosHHOshiro/Gym-pass-style-app-node)
+- [Repository](https://github.com/MarcosHHOshiro/Gym-pass-style-app-node)
 - [Issues](https://github.com/MarcosHHOshiro/Gym-pass-style-app-node/issues)

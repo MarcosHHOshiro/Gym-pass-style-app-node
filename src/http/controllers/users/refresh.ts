@@ -3,7 +3,7 @@ import z from "zod";
 
 // Response schema
 export const refreshResponseSchema = z.object({
-    token: z.string().describe('Novo JWT token de acesso (expira em 10 minutos)')
+    token: z.string().describe('New JWT access token (expires in 10 minutes)')
 });
 
 export async function refresh(request: FastifyRequest, reply: FastifyReply) {

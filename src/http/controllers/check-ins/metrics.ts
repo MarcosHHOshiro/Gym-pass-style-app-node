@@ -4,7 +4,7 @@ import { makeGetUserMetricsUseCase } from "@/use-cases/factories/make-get-user-m
 
 // Response schema
 export const metricsResponseSchema = z.object({
-    checkInsCount: z.number().describe('Número total de check-ins realizados pelo usuário')
+    checkInsCount: z.number().describe('Total number of check-ins made by the user')
 });
 
 export async function metrics(request: FastifyRequest, reply: FastifyReply) {

@@ -4,7 +4,7 @@ import { makeValidateCheckInUseCase } from "@/use-cases/factories/make-validate-
 
 // Request schema
 export const validateCheckInParamsSchema = z.object({
-    checkInId: z.string().uuid().describe('ID do check-in a ser validado (UUID)')
+    checkInId: z.string().uuid().describe('Check-in ID to validate (UUID)')
 });
 
 export async function validate(request: FastifyRequest, reply: FastifyReply) {

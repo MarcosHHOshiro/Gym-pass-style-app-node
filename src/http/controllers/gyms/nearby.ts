@@ -5,8 +5,8 @@ import { gymSchema } from "../schemas/common";
 
 // Request schema
 export const nearbyGymsQuerySchema = z.object({
-    latitude: z.coerce.number().refine((val) => Math.abs(val) <= 90).describe('Latitude da localização do usuário (-90 a 90)'),
-    longitude: z.coerce.number().refine((val) => Math.abs(val) <= 180).describe('Longitude da localização do usuário (-180 a 180)')
+    latitude: z.coerce.number().refine((val) => Math.abs(val) <= 90).describe('User location latitude (-90 to 90)'),
+    longitude: z.coerce.number().refine((val) => Math.abs(val) <= 180).describe('User location longitude (-180 to 180)')
 });
 
 // Response schema

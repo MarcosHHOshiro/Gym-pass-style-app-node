@@ -4,11 +4,11 @@ import { makeCreateGymUseCase } from "@/use-cases/factories/make-create-gym-use-
 
 // Request schema
 export const createGymBodySchema = z.object({
-    title: z.string().min(1).describe('Nome da academia'),
-    description: z.string().optional().describe('Descrição da academia'),
-    phone: z.string().optional().describe('Telefone de contato'),
-    latitude: z.number().refine((val) => Math.abs(val) <= 90).describe('Latitude da localização (-90 a 90)'),
-    longitude: z.number().refine((val) => Math.abs(val) <= 180).describe('Longitude da localização (-180 a 180)')
+    title: z.string().min(1).describe('Gym name'),
+    description: z.string().optional().describe('Gym description'),
+    phone: z.string().optional().describe('Contact phone'),
+    latitude: z.number().refine((val) => Math.abs(val) <= 90).describe('Location latitude (-90 to 90)'),
+    longitude: z.number().refine((val) => Math.abs(val) <= 180).describe('Location longitude (-180 to 180)')
 });
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {

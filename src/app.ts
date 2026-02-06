@@ -38,7 +38,7 @@ app.register(swagger, {
     openapi: {
         info: {
             title: 'GymPass Style API',
-            description: 'API RESTful para gerenciamento de check-ins em academias, inspirada no modelo de negócio do GymPass. Permite que usuários se cadastrem, busquem academias próximas e realizem check-ins. Administradores podem cadastrar academias e validar check-ins.',
+            description: 'RESTful API for managing gym check-ins, inspired by the GymPass business model. Allows users to register, search for nearby gyms and check-in. Administrators can register gyms and validate check-ins.',
             version: '1.0.0',
             contact: {
                 name: 'API Support',
@@ -57,20 +57,20 @@ app.register(swagger, {
                     type: 'http',
                     scheme: 'bearer',
                     bearerFormat: 'JWT',
-                    description: 'JWT token obtido através do endpoint /sessions (expira em 10 minutos)',
+                    description: 'JWT token obtained through /sessions endpoint (expires in 10 minutes)',
                 },
                 cookieAuth: {
                     type: 'apiKey',
                     in: 'cookie',
                     name: 'refreshToken',
-                    description: 'Refresh token armazenado em cookie httpOnly (expira em 7 dias)',
+                    description: 'Refresh token stored in httpOnly cookie (expires in 7 days)',
                 },
             },
         },
         tags: [
-            { name: 'users', description: 'Operações relacionadas a usuários' },
-            { name: 'gyms', description: 'Operações relacionadas a academias' },
-            { name: 'check-ins', description: 'Operações relacionadas a check-ins' },
+            { name: 'users', description: 'User-related operations' },
+            { name: 'gyms', description: 'Gym-related operations' },
+            { name: 'check-ins', description: 'Check-in-related operations' },
         ],
     },
     transform: jsonSchemaTransform,

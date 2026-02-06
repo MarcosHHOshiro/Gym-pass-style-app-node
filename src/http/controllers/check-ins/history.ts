@@ -5,7 +5,7 @@ import { checkInSchema } from "../schemas/common";
 
 // Request schema
 export const checkInHistoryQuerySchema = z.object({
-    page: z.coerce.number().min(1).default(1).describe('Número da página para paginação (20 itens por página)'),
+    page: z.coerce.number().min(1).default(1).describe('Page number for pagination (20 items per page)'),
 });
 
 // Response schema

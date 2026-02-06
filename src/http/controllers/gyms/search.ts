@@ -5,8 +5,8 @@ import { gymSchema } from "../schemas/common";
 
 // Request schema
 export const searchGymQuerySchema = z.object({
-    q: z.string().min(1).describe('Termo de busca para filtrar academias pelo nome'),
-    page: z.coerce.number().min(1).default(1).describe('Número da página para paginação (20 itens por página)'),
+    q: z.string().min(1).describe('Search term to filter gyms by name'),
+    page: z.coerce.number().min(1).default(1).describe('Page number for pagination (20 items per page)'),
 });
 
 // Response schema

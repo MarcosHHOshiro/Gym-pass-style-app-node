@@ -13,51 +13,51 @@ export async function gymsRoutes(app: FastifyInstance) {
 
     const appWithType = app.withTypeProvider<ZodTypeProvider>();
 
-    // GET /gyms/search - Pesquisar academias
+    // GET /gyms/search - Search gyms
     appWithType.get('/gyms/search', {
         schema: {
-            summary: 'Pesquisar academias por nome',
-            description: 'Busca academias filtrando pelo nome. Resultados paginados com 20 itens por página',
+            summary: 'Search gyms by name',
+            description: 'Search for gyms filtering by name. Results paginated with 20 items per page',
             tags: ['gyms'],
             security: [{ bearerAuth: [] }],
             querystring: searchGymQuerySchema,
             response: {
-                200: searchGymResponseSchema.describe('Lista de academias encontradas'),
-                401: unauthorizedErrorSchema.describe('Token JWT inválido ou expirado'),
-                400: validationErrorSchema.describe('Erro de validação dos parâmetros'),
+                200: searchGymResponseSchema.describe('List of gyms found'),
+                401: unauthorizedErrorSchema.describe('Invalid or expired JWT token'),
+                400: validationErrorSchema.describe('Parameter validation error'),
             },
         }
     }, search);
 
-    // GET /gyms/nearby - Buscar academias próximas
+    // GET /gyms/nearby - Find nearby gyms
     appWithType.get('/gyms/nearby', {
         schema: {
-            summary: 'Buscar academias próximas',
-            description: 'Retorna academias em um raio de até 10km da localização fornecida',
+            summary: 'Find nearby gyms',
+            description: 'Returns gyms within a 10km radius of the provided location',
             tags: ['gyms'],
             security: [{ bearerAuth: [] }],
             querystring: nearbyGymsQuerySchema,
             response: {
-                200: nearbyGymsResponseSchema.describe('Lista de academias próximas (até 10km)'),
-                401: unauthorizedErrorSchema.describe('Token JWT inválido ou expirado'),
-                400: validationErrorSchema.describe('Erro de validação dos parâmetros'),
+                200: nearbyGymsResponseSchema.describe('List of nearby gyms (up to 10km)'),
+                401: unauthorizedErrorSchema.describe('Invalid or expired JWT token'),
+                400: validationErrorSchema.describe('Parameter validation error'),
             },
         }
     }, nearby);
 
-    // POST /gyms - Criar academia (ADMIN only)
+    // POST /gyms - Create gym (ADMIN only)
     appWithType.post('/gyms', {
         onRequest: [verifyUserRole('ADMIN')],
         schema: {
-            summary: 'Criar nova academia',
-            description: 'Registra uma nova academia no sistema. **Requer permissão de ADMIN**',
+            summary: 'Create new gym',
+            description: 'Registers a new gym in the system. **Requires ADMIN permission**',
             tags: ['gyms'],
             security: [{ bearerAuth: [] }],
             body: createGymBodySchema,
             response: {
-                201: z.object({}).describe('Academia criada com sucesso'),
-                401: unauthorizedErrorSchema.describe('Token inválido, expirado ou usuário não é ADMIN'),
-                400: validationErrorSchema.describe('Erro de validação dos dados'),
+                201: z.object({}).describe('Gym created successfully'),
+                401: unauthorizedErrorSchema.describe('Invalid or expired token, or user is not ADMIN'),
+                400: validationErrorSchema.describe('Data validation error'),
             },
         }
     }, create);

@@ -5,13 +5,13 @@ import { makeAuthenticateUseCase } from "@/use-cases/factories/make-authenticate
 
 // Request schema
 export const authenticateBodySchema = z.object({
-    email: z.string().email().describe('Email do usuário'),
-    password: z.string().min(6).describe('Senha do usuário')
+    email: z.string().email().describe('User email'),
+    password: z.string().min(6).describe('User password')
 });
 
 // Response schemas
 export const authenticateResponseSchema = z.object({
-    token: z.string().describe('JWT token de acesso (expira em 10 minutos)')
+    token: z.string().describe('JWT access token (expires in 10 minutes)')
 });
 
 export const authenticateErrorSchema = z.object({
