@@ -1,18 +1,48 @@
-name: Run Unit Tests
+name: CI
 
-on: [push]
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
 
 jobs:
-  run-unit-tests:
-    name: Run Unit Tests
+  test:
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '25'
-          cache: 'npm'
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: docker
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: apisolid
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U docker -d apisolid"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
 
-      - run: npm install
+    env:
+      DATABASE_URL: postgresql://docker:docker@localhost:5432/apisolid?schema=public
+      NODE_ENV: test
+      JWT_SECRET: test-secret
+      # se tiver REFRESH_TOKEN_SECRET ou outros, coloca aqui também
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npx prisma generate
+
+      # Cria as tabelas no banco do CI
+      - run: npx prisma migrate deploy
+
       - run: npm run test
+      - run: npm run test:e2e
