@@ -16,8 +16,8 @@ export const gymSchema = z.object({
     title: z.string(),
     description: z.string().nullable(),
     phone: z.string().nullable(),
-    latitude: z.number(),
-    longitude: z.number(),
+    latitude: z.union([z.number(), z.any()]).transform(val => typeof val === 'number' ? val : Number(val)),
+    longitude: z.union([z.number(), z.any()]).transform(val => typeof val === 'number' ? val : Number(val)),
 });
 
 // CheckIn schema (baseado no Prisma model)
