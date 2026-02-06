@@ -1,11 +1,37 @@
-version: '3'
-
 services:
-  api-solid-pg:
-    image: bitnami/postgresql
+  db:
+    image: postgres:16
     ports:
       - "5435:5432"
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=apisolid
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: apisolid
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docker -d apisolid"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3333:3333"
+    environment:
+      DATABASE_URL: postgresql://docker:docker@db:5432/apisolid?schema=public
+      NODE_ENV: dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+    # entrypoint já faz generate + migrate deploy
+    command: npm run dev
+
+volumes:
+  pgdata:
