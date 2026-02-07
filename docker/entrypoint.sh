@@ -21,5 +21,11 @@ npx prisma generate
 echo "🚀 Running migrations..."
 npx prisma migrate deploy
 
+# Build apenas se for produção
+if [ "$NODE_ENV" = "production" ]; then
+  echo "🔨 Building application..."
+  npm run build
+fi
+
 echo "▶ Starting app..."
 exec "$@"
