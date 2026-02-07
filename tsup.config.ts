@@ -12,6 +12,5 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   platform: 'node',
   target: 'node20',
-  external: ['generated/prisma/client'],
-  noExternal: [],
+  noExternal: ['generated'],
 })
