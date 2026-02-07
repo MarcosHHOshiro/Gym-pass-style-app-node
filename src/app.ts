@@ -83,7 +83,7 @@ app.register(swaggerUi, {
         docExpansion: 'list',
         deepLinking: true,
     },
-    staticCSP: true,
+    staticCSP: false,
 });
 
 // Registrar rotas após Swagger
