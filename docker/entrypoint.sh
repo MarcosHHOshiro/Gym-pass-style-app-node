@@ -25,6 +25,9 @@ npx prisma migrate deploy
 if [ "$NODE_ENV" = "production" ]; then
   echo "🔨 Building application..."
   npm run build
+
+  echo "📦 Copying Prisma client to build directory..."
+  cp -r ./generated ./build/
 fi
 
 echo "▶ Starting app..."
